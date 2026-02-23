@@ -9,3 +9,11 @@ answer = first_number * second_number if thing_to_do == "*" else \
         first_number + second_number if thing_to_do == "+" else \
         first_number - second_number if thing_to_do == "-" else "Invalid operation"
 print("The answer is: " + str(answer))
+go_again = input("Do you want to go again? (y/n) ")
+while go_again not in ["y", "n"]:
+    go_again = input("Invalid input. Please enter 'y' for yes or 'n' for no: ")
+if go_again == "y":
+    print("Restarting the calculator...")
+    exec(open("calculator.py").read())
+else:
+    print("Goodbye!")
