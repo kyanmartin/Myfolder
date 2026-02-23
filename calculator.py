@@ -2,8 +2,8 @@ print("Calculator is running!")
 thing_to_do = (input("Are you going to mutiply, divide, add or subtract? (*,/,+,-) "))
 while thing_to_do not in ["*", "/", "+", "-"]:
     thing_to_do = input("Invalid operation. Please choose one of the following: (*, /, +, -):")
-first_number = int(input("What is the first number? "))
-second_number = int(input("What is the second number? "))
+first_number = float(input("What is the first number? "))
+second_number = float(input("What is the second number? "))
 if thing_to_do == "/" and second_number == 0:
     print("Error: Division by zero is not allowed.")
 else:
