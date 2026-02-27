@@ -1,23 +1,50 @@
-print("Calculator is running!")
-thing_to_do = (input("Are you going to mutiply, divide, add or subtract? (*,/,+,-) "))
-while thing_to_do not in ["*", "/", "+", "-"]:
-    thing_to_do = input("Invalid operation. Please choose one of the following: (*, /, +, -):")
-first_number = float(input("What is the first number? "))
-second_number = float(input("What is the second number? "))
-if thing_to_do == "/" and second_number == 0:
-    print("Error: Division by zero is not allowed.")
-else:
-    answer = first_number * second_number if thing_to_do == "*" else \
-        first_number / second_number if thing_to_do == "/" else \
-        first_number + second_number if thing_to_do == "+" else \
-        first_number - second_number if thing_to_do == "-" else "Invalid operation"
+"""Simple calculator with a Gooey-based graphical user interface.
 
-    print("The answer is: " + str(answer))
-go_again = input("Do you want to go again? (y/n) ")
-while go_again not in ["y", "n"]:
-    go_again = input("Invalid input. Please enter 'y' for yes or 'n' for no: ")
-if go_again == "y":
-    print("Restarting the calculator...")
-    exec(open("calculator.py").read())
-else:
-    print("Goodbye!")
+Instead of text prompts, the user can choose an operation and
+enter two numbers in a polished GUI powered by gooey.  The result
+is printed back to the console (and the GUI).
+
+To run:
+
+    python calculator.py
+
+If gooey is not installed, install it with ``pip install Gooey``.
+"""
+
+from gooey import Gooey, GooeyParser
+
+
+@Gooey(program_name="Calculator",
+       default_size=(400, 300),
+       progress_regex=r"^progress: (?P<current>\d+)/(?P<total>\d+)")
+def main():
+    parser = GooeyParser(description="Perform a basic arithmetic operation")
+    parser.add_argument('operation',
+                        choices=['*', '/', '+', '-'],
+                        help='Operation to perform: multiply (*), divide (/), add (+) or subtract (-)')
+    parser.add_argument('first', type=float, help='First number')
+    parser.add_argument('second', type=float, help='Second number')
+
+    args = parser.parse_args()
+
+    # compute result
+    if args.operation == '/' and args.second == 0:
+        result = None
+        message = "Error: Division by zero is not allowed."
+    else:
+        if args.operation == '*':
+            result = args.first * args.second
+        elif args.operation == '/':
+            result = args.first / args.second
+        elif args.operation == '+':
+            result = args.first + args.second
+        elif args.operation == '-':
+            result = args.first - args.second
+        message = f"The answer is: {result}"
+
+    # print result; Gooey will display it in output panel as well
+    print(message)
+
+
+if __name__ == '__main__':
+    main()
